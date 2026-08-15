@@ -85,7 +85,7 @@ The intended policy is based on least privilege:
 
 The current equipment will be reused where it fits the security design rather than replacing hardware unnecessarily.
 
-- A dedicated x86-64 mini PC is being evaluated as the OPNsense firewall host. Network-interface count and compatibility will be verified before deployment.
+- A dedicated x86-64 mini PC is being evaluated as the OPNsense firewall host. Two physical Ethernet interfaces are available, satisfying the basic requirement for separate WAN and LAN connectivity. NIC chipset/driver compatibility and negotiated link speeds will still be verified before production use.
 - The existing unmanaged Gigabit Ethernet switch can remain in service as an edge switch for devices that all belong to one network segment, but it will not serve as the core VLAN switch.
 - An existing Wi-Fi 6 router will be repurposed temporarily as the primary-workspace access point and local wired edge switch for trusted devices.
 - The ISP-provided router will be retained for rollback and evaluated as a temporary secondary access point near the core location.
