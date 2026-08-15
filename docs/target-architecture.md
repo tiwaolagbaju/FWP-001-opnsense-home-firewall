@@ -52,7 +52,9 @@ A workstation can still serve as the primary administration console without bein
 
 ## Wireless Strategy
 
-The initial wireless design will use wired Ethernet backhaul and dedicated access points positioned on separate occupied floors. Coverage will be validated after deployment before additional access points are purchased.
+The initial deployment will use two wired access points: one providing coverage near the network-core level and one serving the primary living level. Wired Ethernet backhaul will be used rather than wireless mesh backhaul.
+
+A future wireless refresh is planned around a coordinated VLAN-aware AP platform, with the goal of approximately one access point per level. Final AP count and placement will be based on measured signal strength, throughput, roaming behavior, and dead-zone testing rather than AP count alone.
 
 The long-term wireless platform should support multiple SSIDs mapped to 802.1Q VLANs so Trusted, IoT, and Guest wireless clients can remain in separate security zones.
 
