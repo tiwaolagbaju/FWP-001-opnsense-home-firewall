@@ -1,6 +1,6 @@
 # Target Network Architecture
 
-> **Security note:** This public document intentionally omits exact VLAN IDs, internal subnets, hostnames, MAC addresses, management addresses, credentials, keys, remote-access details, and unnecessary device fingerprinting information.
+> **Security note:** This public document intentionally omits exact VLAN IDs, internal subnets, hostnames, MAC addresses, management addresses, credentials, keys, remote-access details, exact room locations, cable-drop locations, and unnecessary device fingerprinting information.
 
 ## Design Goal
 
@@ -26,21 +26,35 @@ Dedicated segment for server and storage systems. Access will be limited to appr
 Internet
    |
    v
-Verizon ONT
+ISP Fiber Handoff
    |
    v
 OPNsense Firewall / Router
    |
    v
-VLAN-capable Managed Switch
+VLAN-capable Managed Core Switch
    |
    +-- Main / Trusted
    +-- IoT
    +-- Guest
    +-- Server / NAS
    |
-   +-- VLAN-capable Wireless Access Point
+   +-- Wired Access Points
 ```
+
+## Physical Distribution Strategy
+
+The home already has structured Ethernet cabling from a central utility location to multiple occupied floors. The design will use that central location as the network-distribution point rather than placing the physical core beside a workstation.
+
+The central rack is intended to house or support the firewall, core switching, patching/cable management, and power protection where equipment dimensions allow. Existing Ethernet runs will provide wired backhaul to access points and wired edge devices on other floors.
+
+A workstation can still serve as the primary administration console without being the physical network core.
+
+## Wireless Strategy
+
+The initial wireless design will use wired Ethernet backhaul and dedicated access points positioned on separate occupied floors. Coverage will be validated after deployment before additional access points are purchased.
+
+The long-term wireless platform should support multiple SSIDs mapped to 802.1Q VLANs so Trusted, IoT, and Guest wireless clients can remain in separate security zones.
 
 ## Security Policy Direction
 
@@ -61,13 +75,15 @@ The current equipment will be reused where it fits the security design rather th
 - An existing Wi-Fi 6 router can potentially be repurposed as a temporary access point for a single trusted wireless segment.
 - The ISP-provided router will be retained during the project as a rollback device and may be evaluated for temporary access-point use.
 - An existing wired VPN router is useful for lab testing or backup routing but is not planned to remain in the primary production path once OPNsense becomes the edge firewall/router.
+- A compact 8U rack is available for central organization of compatible network equipment. Because it is a shallow 10-inch format, equipment fit and cable-clearance requirements will be verified before mounting.
 
 ## Infrastructure Requirements
 
 The final design will require:
 
 - An OPNsense-compatible x86-64 system with reliable separate WAN and LAN connectivity.
-- A managed switch with IEEE 802.1Q VLAN support.
-- A VLAN-capable wireless access point if multiple wireless SSIDs are mapped to separate network segments.
+- A managed switch with IEEE 802.1Q VLAN support; PoE capability is preferred if it will power the wireless access points.
+- VLAN-capable wireless access points capable of mapping multiple SSIDs to separate VLANs.
+- Suitable power protection for the network core.
 
-Exact hardware, addressing, VLAN identifiers, firewall rules, and management details will remain sanitized in public documentation.
+Exact hardware placement, addressing, VLAN identifiers, firewall rules, and management details will remain sanitized in public documentation.
