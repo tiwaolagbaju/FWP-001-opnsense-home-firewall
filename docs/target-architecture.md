@@ -1,6 +1,6 @@
 # Target Network Architecture
 
-> **Security note:** This public document intentionally omits exact VLAN IDs, internal subnets, hostnames, MAC addresses, management addresses, credentials, keys, and remote-access details.
+> **Security note:** This public document intentionally omits exact VLAN IDs, internal subnets, hostnames, MAC addresses, management addresses, credentials, keys, remote-access details, and unnecessary device fingerprinting information.
 
 ## Design Goal
 
@@ -52,12 +52,22 @@ The intended policy is based on least privilege:
 - **Server / NAS:** reachable only from approved networks and services; unnecessary outbound access restricted where practical.
 - **Inter-VLAN traffic:** denied by default unless an explicit business or functional requirement exists.
 
+## Existing Hardware Reuse Plan
+
+The current equipment will be reused where it fits the security design rather than replacing hardware unnecessarily.
+
+- A dedicated x86-64 mini PC is being evaluated as the OPNsense firewall host. Network-interface count and compatibility will be verified before deployment.
+- The existing unmanaged Gigabit Ethernet switch can remain in service as an edge switch for devices that all belong to one network segment, but it will not serve as the core VLAN switch.
+- An existing Wi-Fi 6 router can potentially be repurposed as a temporary access point for a single trusted wireless segment.
+- The ISP-provided router will be retained during the project as a rollback device and may be evaluated for temporary access-point use.
+- An existing wired VPN router is useful for lab testing or backup routing but is not planned to remain in the primary production path once OPNsense becomes the edge firewall/router.
+
 ## Infrastructure Requirements
 
 The final design will require:
 
-- An OPNsense-compatible system with separate WAN and LAN connectivity.
+- An OPNsense-compatible x86-64 system with reliable separate WAN and LAN connectivity.
 - A managed switch with IEEE 802.1Q VLAN support.
 - A VLAN-capable wireless access point if multiple wireless SSIDs are mapped to separate network segments.
 
-Exact hardware, addressing, VLAN identifiers, and firewall rules will be selected and tested later in the project and will remain sanitized in public documentation.
+Exact hardware, addressing, VLAN identifiers, firewall rules, and management details will remain sanitized in public documentation.
