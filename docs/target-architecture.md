@@ -85,7 +85,9 @@ The intended policy is based on least privilege:
 
 The current equipment will be reused where it fits the security design rather than replacing hardware unnecessarily.
 
-- A dedicated x86-64 mini PC is planned as the OPNsense firewall host. It provides two physical Ethernet interfaces: one Intel-based 2.5 GbE interface and one Realtek-based 1 GbE interface. Both interface families are supported by FreeBSD, the operating-system base used by OPNsense. Final WAN/LAN port assignment will be chosen after confirming the subscribed Internet speed and validating both links under load.
+- A dedicated x86-64 mini PC is planned as the OPNsense firewall host. It provides two physical Ethernet interfaces: one Intel-based 2.5 GbE interface and one Realtek-based 1 GbE interface.
+- With the current Internet service at the 1 Gig tier, the provisional interface assignment is **1 GbE WAN** to the ISP handoff and **2.5 GbE LAN** toward the future managed core switch. This preserves the faster interface for internal traffic and future higher-speed LAN devices while matching the present WAN requirement.
+- Interface stability, negotiated speed, and throughput will be validated during lab testing before the production cutover. If either adapter shows compatibility or stability issues, the WAN/LAN roles can be swapped during testing.
 - The existing unmanaged Gigabit Ethernet switch can remain in service as an edge switch for devices that all belong to one network segment, but it will not serve as the core VLAN switch.
 - An existing Wi-Fi 6 router will be repurposed temporarily as the primary-workspace access point and local wired edge switch for trusted devices.
 - The ISP-provided router will be retained for rollback and evaluated as a temporary secondary access point near the core location.
