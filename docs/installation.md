@@ -20,6 +20,20 @@ The installation image checksum was verified before the USB installer was create
 
 OPNsense 26.7 installed successfully to the internal SSD and booted from local storage after the installer USB was removed.
 
+## Network Interface Assignment
+
+Both onboard Ethernet interfaces were detected successfully by OPNsense:
+
+- `igc0` — Intel-based 2.5 GbE interface
+- `re0` — Realtek-based 1 GbE interface
+
+For the current 1 Gig Internet service, the initial assignment is:
+
+- **LAN:** `igc0` — preserves the faster 2.5 GbE interface for the internal network and future managed switching
+- **WAN:** `re0` — matches the present 1 Gig WAN requirement
+
+No LAGG, VLAN, or optional physical interface was configured during the initial console setup. VLANs will be added later after the basic WAN/LAN lab configuration is validated.
+
 At this checkpoint:
 
 - [x] Bootable installer created
@@ -28,12 +42,12 @@ At this checkpoint:
 - [x] ZFS installation completed
 - [x] System rebooted from internal storage
 - [x] OPNsense 26.7 console reached successfully
-- [ ] Verify detected network interfaces
-- [ ] Assign WAN and LAN roles
+- [x] Verify detected network interfaces
+- [x] Assign WAN and LAN roles
 - [ ] Configure isolated lab network
 - [ ] Confirm web-management access
 - [ ] Update firmware/packages before production cutover
 
 ## Next Step
 
-The next step is to verify the detected Ethernet interfaces and assign the appropriate physical ports to WAN and LAN before connecting the firewall to the existing network.
+The next step is to connect one test workstation to the LAN interface, confirm DHCP and web-management access, and then connect the WAN interface to the existing router for an isolated double-NAT lab test before touching the ISP handoff.
