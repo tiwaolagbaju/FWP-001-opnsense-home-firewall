@@ -60,6 +60,10 @@ At the validation checkpoint, the resolver reported a blocklist containing appro
 
 The high initial blocked-query percentage was treated as a short-window observation rather than a final effectiveness metric because reporting had only recently been enabled.
 
+## Step 6 — Automated Blocklist Refresh
+
+The built-in Unbound DNS blocklist update task was scheduled to run once per day during an off-hours maintenance window. This keeps the selected blocklist current without requiring manual updates.
+
 ## Next Step
 
-Schedule the built-in `Update Unbound DNSBLs` task to refresh the selected blocklist once per day, then verify that the scheduled job is present before moving on to DNS enforcement and production cutover preparation.
+Enforce the local DNS policy at the LAN firewall boundary by allowing clients to use the firewall resolver while blocking direct client access to external plaintext DNS and DNS-over-TLS services. Validate the policy with controlled DNS bypass tests before production cutover.
