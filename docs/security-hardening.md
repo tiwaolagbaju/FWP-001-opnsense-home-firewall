@@ -64,6 +64,12 @@ The high initial blocked-query percentage was treated as a short-window observat
 
 The built-in Unbound DNS blocklist update task was scheduled to run once per day during an off-hours maintenance window. This keeps the selected blocklist current without requiring manual updates.
 
+## Step 7 — IPv4 DNS Enforcement
+
+LAN firewall rules were added above the broad LAN allow rule so clients can use the firewall's local resolver while direct IPv4 DNS queries to external resolvers on TCP/UDP port 53 are blocked.
+
+Validation confirmed that normal DNS resolution through OPNsense continued to work while direct test queries to public resolvers failed as expected.
+
 ## Next Step
 
-Enforce the local DNS policy at the LAN firewall boundary by allowing clients to use the firewall resolver while blocking direct client access to external plaintext DNS and DNS-over-TLS services. Validate the policy with controlled DNS bypass tests before production cutover.
+Block direct client DNS-over-TLS traffic on TCP port 853 and validate the rule independently. After IPv4 enforcement is complete, evaluate the existing IPv6 policy so that DNS cannot bypass filtering over IPv6 before production cutover.
