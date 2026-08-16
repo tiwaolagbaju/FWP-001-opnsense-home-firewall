@@ -52,6 +52,14 @@ Unbound was configured to forward external DNS requests to a certificate-validat
 
 A WAN-side packet capture was then performed while generating fresh DNS queries from a test client. Outbound TCP/853 traffic to the configured resolver was observed, confirming that the encrypted DNS transport path is active rather than relying on plaintext DNS fallback.
 
+## Step 5 — DNS Blocklist Validation
+
+A conservative predefined Unbound DNS blocklist was enabled using NXDOMAIN responses for blocked domains. Unbound reporting was enabled to verify activity and blocklist loading.
+
+At the validation checkpoint, the resolver reported a blocklist containing approximately 160,000 entries. Normal browsing and commonly used services continued to function correctly, so the blocklist was retained without adding additional overlapping lists.
+
+The high initial blocked-query percentage was treated as a short-window observation rather than a final effectiveness metric because reporting had only recently been enabled.
+
 ## Next Step
 
-Add a conservative Unbound DNS blocklist policy, validate that normal browsing still works, then test a known blocklisted domain before considering broader categories or DNS enforcement rules.
+Schedule the built-in `Update Unbound DNSBLs` task to refresh the selected blocklist once per day, then verify that the scheduled job is present before moving on to DNS enforcement and production cutover preparation.
