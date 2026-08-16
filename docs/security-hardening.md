@@ -50,8 +50,8 @@ This adds validation of signed DNS responses before the project moves on to encr
 
 Unbound was configured to forward external DNS requests to a certificate-validated DNS-over-TLS upstream on TCP port 853. Normal client DNS resolution and HTTPS browsing remained functional after the change.
 
-The encrypted resolver path will be independently verified with a WAN-side packet capture before DNS blocklists or DNS enforcement rules are added.
+A WAN-side packet capture was then performed while generating fresh DNS queries from a test client. Outbound TCP/853 traffic to the configured resolver was observed, confirming that the encrypted DNS transport path is active rather than relying on plaintext DNS fallback.
 
 ## Next Step
 
-Verify that outbound DNS traffic from the firewall is actually using DNS-over-TLS on TCP port 853, then add DNS blocklist policy and DNS enforcement controls only after the transport path is confirmed.
+Add a conservative Unbound DNS blocklist policy, validate that normal browsing still works, then test a known blocklisted domain before considering broader categories or DNS enforcement rules.
