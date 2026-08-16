@@ -79,6 +79,25 @@ Compared with the pre-OPNsense baseline of approximately 936.75 Mbps download, 8
 
 Because this test traverses both the existing ISP router and OPNsense, it is intentionally treated as a lab validation rather than the final production benchmark. Even with the additional routing/NAT layer, throughput remained within 5% of the original wired baseline.
 
+## Production WAN Performance Validation
+
+After the ISP Ethernet handoff was moved directly to OPNsense and the firewall obtained a public WAN lease, three additional wired speed tests were performed from the trusted test workstation.
+
+| Test | Ping | Download | Upload |
+|---|---:|---:|---:|
+| 1 | 5 ms | 938.19 Mbps | 924.27 Mbps |
+| 2 | 8 ms | 937.68 Mbps | 912.77 Mbps |
+| 3 | 8 ms | 937.05 Mbps | 922.28 Mbps |
+| **Average** | **7 ms** | **937.64 Mbps** | **919.77 Mbps** |
+
+Compared with the original pre-OPNsense wired baseline of approximately 936.75 Mbps download, 881.10 Mbps upload, and 7 ms latency:
+
+- **Download:** approximately 0.10% higher
+- **Upload:** approximately 4.39% higher
+- **Latency:** unchanged on average
+
+The production test therefore met the project's performance target with no meaningful throughput or latency penalty from replacing the ISP router with OPNsense.
+
 ## Automatic Power Recovery
 
 The mini PC firmware was configured with **AC power loss control = Always on**. This ensures the firewall appliance automatically powers back on after utility power is restored rather than requiring a manual power-button press.
@@ -103,7 +122,9 @@ At this checkpoint:
 - [x] Measure lab throughput and latency
 - [x] Configure automatic startup after AC power restoration
 - [x] Validate automatic power recovery behavior
+- [x] Validate direct public WAN connectivity
+- [x] Measure production throughput and latency
 
 ## Next Step
 
-The firewall has passed the installation, connectivity, update, backup, performance, and power-recovery checkpoints. The next stage is to complete production-ready DNS enforcement and final cutover preparation.
+The firewall has passed installation, lab validation, security hardening, direct WAN cutover, recovery, and production performance checkpoints. The next stage is to restore temporary wireless service by converting the former ISP router into a downstream access-point role while keeping OPNsense as the only router, DHCP authority, and DNS path.
