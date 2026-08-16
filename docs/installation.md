@@ -83,7 +83,7 @@ Because this test traverses both the existing ISP router and OPNsense, it is int
 
 The mini PC firmware was configured with **AC power loss control = Always on**. This ensures the firewall appliance automatically powers back on after utility power is restored rather than requiring a manual power-button press.
 
-A controlled power-restore test is planned before production cutover to verify the behavior end-to-end.
+A controlled power-restore test was completed successfully. After AC power was removed and restored, the mini PC powered itself back on without a manual power-button press and OPNsense booted normally.
 
 At this checkpoint:
 
@@ -102,8 +102,8 @@ At this checkpoint:
 - [x] Validate post-update connectivity
 - [x] Measure lab throughput and latency
 - [x] Configure automatic startup after AC power restoration
-- [ ] Validate automatic power recovery behavior
+- [x] Validate automatic power recovery behavior
 
 ## Next Step
 
-The firewall has passed the initial installation, connectivity, update, backup, and lab-performance checkpoints. The next stage is to validate automatic power recovery, then continue the production-ready security hardening and cutover preparation.
+The firewall has passed the installation, connectivity, update, backup, performance, and power-recovery checkpoints. The next stage is to complete production-ready DNS enforcement and final cutover preparation.
