@@ -72,6 +72,12 @@ Validation confirmed that normal DNS resolution through OPNsense continued to wo
 
 A separate LAN rule was then added to block direct client DNS-over-TLS connections on TCP port 853. A controlled client connectivity test to an external resolver on TCP/853 returned a failed connection result, confirming that client DoT bypass is blocked while the firewall itself can continue using its configured encrypted upstream resolver.
 
+## Step 8 — IPv6 Lab Validation
+
+The test workstation received only a link-local IPv6 address (`fe80::/10`) and had no working end-to-end IPv6 connectivity in the current double-NAT lab. A direct IPv6 connectivity test to a public IPv6 endpoint returned no replies.
+
+Because no routed IPv6 client path is active in the lab, equivalent IPv6 DNS enforcement rules are deferred until the production WAN is connected and IPv6 behavior can be tested against the ISP handoff.
+
 ## Next Step
 
-Evaluate the current IPv6 client path and apply equivalent DNS enforcement where necessary so that filtering cannot be bypassed over IPv6. After IPv4 and IPv6 DNS policy are validated, export a fresh configuration backup and prepare for production cutover.
+Export a fresh post-hardening configuration backup and store it privately. Then prepare for production cutover, including restoring normal public-WAN protections, validating ISP DHCP behavior, and retesting IPv6 after the direct ISP handoff.
