@@ -79,6 +79,12 @@ Compared with the pre-OPNsense baseline of approximately 936.75 Mbps download, 8
 
 Because this test traverses both the existing ISP router and OPNsense, it is intentionally treated as a lab validation rather than the final production benchmark. Even with the additional routing/NAT layer, throughput remained within 5% of the original wired baseline.
 
+## Automatic Power Recovery
+
+The mini PC firmware was configured with **AC power loss control = Always on**. This ensures the firewall appliance automatically powers back on after utility power is restored rather than requiring a manual power-button press.
+
+A controlled power-restore test is planned before production cutover to verify the behavior end-to-end.
+
 At this checkpoint:
 
 - [x] Bootable installer created
@@ -95,7 +101,9 @@ At this checkpoint:
 - [x] Update firmware/packages before production cutover
 - [x] Validate post-update connectivity
 - [x] Measure lab throughput and latency
+- [x] Configure automatic startup after AC power restoration
+- [ ] Validate automatic power recovery behavior
 
 ## Next Step
 
-The firewall has passed the initial installation, connectivity, update, backup, and lab-performance checkpoints. The next stage is to finalize the production-ready base configuration and hardening settings before moving the WAN connection from the ISP router to OPNsense.
+The firewall has passed the initial installation, connectivity, update, backup, and lab-performance checkpoints. The next stage is to validate automatic power recovery, then continue the production-ready security hardening and cutover preparation.
