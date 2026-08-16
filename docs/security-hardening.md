@@ -78,6 +78,12 @@ The test workstation received only a link-local IPv6 address (`fe80::/10`) and h
 
 Because no routed IPv6 client path is active in the lab, equivalent IPv6 DNS enforcement rules are deferred until the production WAN is connected and IPv6 behavior can be tested against the ISP handoff.
 
+## Step 9 — Post-Hardening Recovery Point
+
+After all lab hardening and DNS-enforcement checks passed, a fresh full OPNsense configuration backup was exported and stored privately. The backup is intentionally excluded from the public repository because configuration exports can contain sensitive operational data.
+
+This creates a known-good recovery point immediately before the production WAN cutover.
+
 ## Next Step
 
-Export a fresh post-hardening configuration backup and store it privately. Then prepare for production cutover, including restoring normal public-WAN protections, validating ISP DHCP behavior, and retesting IPv6 after the direct ISP handoff.
+Prepare the production cutover: preserve rollback capability, release the existing ISP router DHCP lease if available, move the ONT Ethernet handoff to OPNsense, confirm that OPNsense receives a public WAN lease, restore normal public-WAN protections, and revalidate DNS, Internet access, performance, and IPv6 behavior.
