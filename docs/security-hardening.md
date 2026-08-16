@@ -70,6 +70,8 @@ LAN firewall rules were added above the broad LAN allow rule so clients can use 
 
 Validation confirmed that normal DNS resolution through OPNsense continued to work while direct test queries to public resolvers failed as expected.
 
+A separate LAN rule was then added to block direct client DNS-over-TLS connections on TCP port 853. A controlled client connectivity test to an external resolver on TCP/853 returned a failed connection result, confirming that client DoT bypass is blocked while the firewall itself can continue using its configured encrypted upstream resolver.
+
 ## Next Step
 
-Block direct client DNS-over-TLS traffic on TCP port 853 and validate the rule independently. After IPv4 enforcement is complete, evaluate the existing IPv6 policy so that DNS cannot bypass filtering over IPv6 before production cutover.
+Evaluate the current IPv6 client path and apply equivalent DNS enforcement where necessary so that filtering cannot be bypassed over IPv6. After IPv4 and IPv6 DNS policy are validated, export a fresh configuration backup and prepare for production cutover.
