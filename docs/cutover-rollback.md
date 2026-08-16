@@ -39,6 +39,8 @@ The migration will be performed in controlled stages rather than changing the en
 - Restore normal public-WAN protections after confirming the WAN is no longer using a private upstream address.
 - Only after the direct OPNsense path is proven should the temporary wireless access point be prepared and connected.
 
+**Current cutover status:** The ISP router DHCP lease was released, the ONT Ethernet handoff was moved directly to the OPNsense WAN interface, and OPNsense successfully obtained a public IPv4 WAN lease. The actual public address is intentionally not recorded in this repository.
+
 ### Stage 3A — Temporary ISP Router Access-Point Role
 
 The original ISP router may be reused temporarily for wireless coverage after OPNsense is confirmed as the working edge router.
