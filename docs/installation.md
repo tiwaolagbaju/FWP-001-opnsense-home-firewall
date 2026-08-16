@@ -34,6 +34,10 @@ For the current 1 Gig Internet service, the initial assignment is:
 
 No LAGG, VLAN, or optional physical interface was configured during the initial console setup. VLANs will be added later after the basic WAN/LAN lab configuration is validated.
 
+## Initial LAN Validation
+
+A directly connected test workstation successfully received a DHCP lease from the OPNsense LAN interface and reached the OPNsense web-management interface over HTTPS. This confirmed that the LAN interface, DHCP service, and local management path were functioning before the WAN side was connected.
+
 At this checkpoint:
 
 - [x] Bootable installer created
@@ -45,9 +49,9 @@ At this checkpoint:
 - [x] Verify detected network interfaces
 - [x] Assign WAN and LAN roles
 - [ ] Configure isolated lab network
-- [ ] Confirm web-management access
+- [x] Confirm web-management access
 - [ ] Update firmware/packages before production cutover
 
 ## Next Step
 
-The next step is to connect one test workstation to the LAN interface, confirm DHCP and web-management access, and then connect the WAN interface to the existing router for an isolated double-NAT lab test before touching the ISP handoff.
+The next step is to connect the OPNsense WAN interface to the existing router for an isolated double-NAT lab test, verify that the WAN receives a private DHCP address, and confirm Internet access from the test workstation before touching the ISP handoff.
