@@ -68,7 +68,7 @@ The built-in Unbound DNS blocklist update task was scheduled to run once per day
 
 LAN firewall rules were added above the broad LAN allow rule so clients can use the firewall's local resolver while direct IPv4 DNS queries to external resolvers on TCP/UDP port 53 are blocked.
 
-Validation confirmed that normal DNS resolution through OPNsense continued to work while direct test queries to public resolvers failed as expected.
+Validation confirmed that normal DNS resolution through OPNsense continued to work while direct test queries to public resolvers failed as expected. Firewall Live View also showed the controlled bypass attempt matching the DNS-block rule, providing log-level evidence that the policy was enforcing the intended traffic path.
 
 A separate LAN rule was then added to block direct client DNS-over-TLS connections on TCP port 853. A controlled client connectivity test to an external resolver on TCP/853 returned a failed connection result, confirming that client DoT bypass is blocked while the firewall itself can continue using its configured encrypted upstream resolver.
 
