@@ -8,7 +8,7 @@ A dedicated x86-64 mini PC was repurposed as the OPNsense firewall appliance. Ex
 
 ## Installation Media
 
-- **OPNsense version:** 26.7
+- **Initial OPNsense version:** 26.7
 - **Architecture:** amd64
 - **Installer type:** VGA USB image
 - **Filesystem:** ZFS
@@ -56,6 +56,10 @@ After the successful isolated lab validation, a full configuration backup was ex
 
 This backup provides a recovery point before firmware updates and later security configuration changes.
 
+## Firmware Update Checkpoint
+
+Before performance testing and production cutover, the firewall was updated from the installation image to **OPNsense 26.7.2_2**. Post-update connectivity and performance validation will be performed before the system is placed into the production path.
+
 At this checkpoint:
 
 - [x] Bootable installer created
@@ -63,14 +67,16 @@ At this checkpoint:
 - [x] Internal installation disk identified
 - [x] ZFS installation completed
 - [x] System rebooted from internal storage
-- [x] OPNsense 26.7 console reached successfully
+- [x] OPNsense console reached successfully
 - [x] Verify detected network interfaces
 - [x] Assign WAN and LAN roles
 - [x] Configure isolated lab network
 - [x] Confirm web-management access
 - [x] Export known-good lab configuration backup
-- [ ] Update firmware/packages before production cutover
+- [x] Update firmware/packages before production cutover
+- [ ] Validate post-update connectivity
+- [ ] Measure lab throughput and latency
 
 ## Next Step
 
-The next step is to check for and install production firmware updates, confirm the firewall returns to a healthy state, and then measure lab throughput and latency through OPNsense before production cutover.
+The next step is to confirm that management access, Internet routing, and DNS remain healthy after the firmware update, then measure throughput and latency through OPNsense using the same wired test method used for the pre-migration baseline.
