@@ -40,6 +40,12 @@ The WebGUI was then configured to use the TOTP-backed authentication server. A f
 
 The original privileged system account is retained only as a controlled recovery path rather than the routine WebGUI administrator.
 
+## Step 3 — Unbound DNSSEC Validation
+
+The built-in Unbound DNS resolver was retained as the network DNS service and DNSSEC validation was enabled. Client DNS resolution and normal web browsing were tested after the change and remained functional.
+
+This adds validation of signed DNS responses before the project moves on to encrypted upstream DNS transport.
+
 ## Next Step
 
-Harden the recovery/console model, then configure and validate the local DNS resolver and DNSSEC before production cutover.
+Configure Unbound DNS-over-TLS to a validated upstream resolver, test resolution after the change, and then add DNS blocklist policy only after the encrypted resolver path is confirmed stable.
