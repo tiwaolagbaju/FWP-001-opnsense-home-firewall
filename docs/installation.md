@@ -1,6 +1,6 @@
 # OPNsense Installation
 
-> **Security note:** This public documentation intentionally omits passwords, management addresses, MAC addresses, serial numbers, and other identifying or operational details.
+> **Security note:** This public documentation intentionally omits passwords, management addresses, MAC addresses, serial numbers, backup files, and other identifying or operational details.
 
 ## Installation Target
 
@@ -50,6 +50,12 @@ The WAN interface successfully received a private DHCP lease and default gateway
 
 This confirms basic WAN DHCP, routing/NAT, LAN DHCP, DNS forwarding/resolution, and firewall pass-through behavior before production cutover.
 
+## Known-Good Configuration Backup
+
+After the successful isolated lab validation, a full configuration backup was exported and stored privately. The backup file is intentionally excluded from the public repository because OPNsense configuration exports can contain sensitive network and firewall information.
+
+This backup provides a recovery point before firmware updates and later security configuration changes.
+
 At this checkpoint:
 
 - [x] Bootable installer created
@@ -62,8 +68,9 @@ At this checkpoint:
 - [x] Assign WAN and LAN roles
 - [x] Configure isolated lab network
 - [x] Confirm web-management access
+- [x] Export known-good lab configuration backup
 - [ ] Update firmware/packages before production cutover
 
 ## Next Step
 
-The next step is to update OPNsense, export a known-good configuration backup, and then measure lab throughput and latency through the firewall before production cutover.
+The next step is to check for and install production firmware updates, confirm the firewall returns to a healthy state, and then measure lab throughput and latency through OPNsense before production cutover.
