@@ -38,6 +38,18 @@ No LAGG, VLAN, or optional physical interface was configured during the initial 
 
 A directly connected test workstation successfully received a DHCP lease from the OPNsense LAN interface and reached the OPNsense web-management interface over HTTPS. This confirmed that the LAN interface, DHCP service, and local management path were functioning before the WAN side was connected.
 
+## Isolated WAN / Double-NAT Lab Validation
+
+The WAN interface was connected to a LAN port on the existing ISP router so OPNsense could be tested without interrupting the household Internet connection. Because the lab WAN receives a private RFC1918 address from the upstream router, private-network blocking on the WAN was disabled for the lab stage only.
+
+The WAN interface successfully received a private DHCP lease and default gateway from the upstream router. From the test workstation behind OPNsense, the following checks all passed:
+
+- ICMP connectivity to a public Internet address
+- DNS resolution of a public hostname
+- HTTPS web browsing to a public site
+
+This confirms basic WAN DHCP, routing/NAT, LAN DHCP, DNS forwarding/resolution, and firewall pass-through behavior before production cutover.
+
 At this checkpoint:
 
 - [x] Bootable installer created
@@ -48,10 +60,10 @@ At this checkpoint:
 - [x] OPNsense 26.7 console reached successfully
 - [x] Verify detected network interfaces
 - [x] Assign WAN and LAN roles
-- [ ] Configure isolated lab network
+- [x] Configure isolated lab network
 - [x] Confirm web-management access
 - [ ] Update firmware/packages before production cutover
 
 ## Next Step
 
-The next step is to connect the OPNsense WAN interface to the existing router for an isolated double-NAT lab test, verify that the WAN receives a private DHCP address, and confirm Internet access from the test workstation before touching the ISP handoff.
+The next step is to update OPNsense, export a known-good configuration backup, and then measure lab throughput and latency through the firewall before production cutover.
