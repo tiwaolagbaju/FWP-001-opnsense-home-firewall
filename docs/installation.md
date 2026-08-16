@@ -1,6 +1,6 @@
 # OPNsense Installation
 
-> **Security note:** This public documentation intentionally omits passwords, management addresses, MAC addresses, serial numbers, backup files, and other identifying or operational details.
+> **Security note:** This public documentation intentionally omits passwords, management addresses, MAC addresses, serial numbers, backup files, exact test-server location, and other identifying or operational details.
 
 ## Installation Target
 
@@ -58,7 +58,26 @@ This backup provides a recovery point before firmware updates and later security
 
 ## Firmware Update Checkpoint
 
-Before performance testing and production cutover, the firewall was updated from the installation image to **OPNsense 26.7.2_2**. Post-update connectivity and performance validation will be performed before the system is placed into the production path.
+Before performance testing and production cutover, the firewall was updated from the installation image to **OPNsense 26.7.2_2**. Post-update management access, Internet routing, DNS resolution, and web access remained functional.
+
+## Lab Performance Validation
+
+Three wired speed tests were performed from the test workstation behind OPNsense while the firewall remained in the isolated double-NAT lab topology.
+
+| Test | Ping | Download | Upload |
+|---|---:|---:|---:|
+| 1 | 11 ms | 931.07 Mbps | 860.61 Mbps |
+| 2 | 8 ms | 903.96 Mbps | 874.04 Mbps |
+| 3 | 8 ms | 912.14 Mbps | 896.26 Mbps |
+| **Average** | **9 ms** | **915.72 Mbps** | **876.97 Mbps** |
+
+Compared with the pre-OPNsense baseline of approximately 936.75 Mbps download, 881.10 Mbps upload, and 7 ms latency, the lab averages were approximately:
+
+- **Download:** 2.24% lower
+- **Upload:** 0.47% lower
+- **Latency:** 2 ms higher
+
+Because this test traverses both the existing ISP router and OPNsense, it is intentionally treated as a lab validation rather than the final production benchmark. Even with the additional routing/NAT layer, throughput remained within 5% of the original wired baseline.
 
 At this checkpoint:
 
@@ -74,9 +93,9 @@ At this checkpoint:
 - [x] Confirm web-management access
 - [x] Export known-good lab configuration backup
 - [x] Update firmware/packages before production cutover
-- [ ] Validate post-update connectivity
-- [ ] Measure lab throughput and latency
+- [x] Validate post-update connectivity
+- [x] Measure lab throughput and latency
 
 ## Next Step
 
-The next step is to confirm that management access, Internet routing, and DNS remain healthy after the firmware update, then measure throughput and latency through OPNsense using the same wired test method used for the pre-migration baseline.
+The firewall has passed the initial installation, connectivity, update, backup, and lab-performance checkpoints. The next stage is to finalize the production-ready base configuration and hardening settings before moving the WAN connection from the ISP router to OPNsense.
