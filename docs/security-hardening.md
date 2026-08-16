@@ -30,6 +30,16 @@ After saving these settings, the following validation checks passed:
 - DNS resolution remained functional.
 - Normal HTTPS web browsing remained functional.
 
+## Step 2 — Dedicated Administrator and TOTP
+
+A separate administrator account was created and granted administrative access through the appropriate administrator group. A TOTP seed was generated and enrolled in a compatible authenticator application.
+
+A dedicated `Local + Timebased One Time Password` authentication server was created and validated with OPNsense's authentication tester before the WebGUI authentication method was changed.
+
+The WebGUI was then configured to use the TOTP-backed authentication server. A fresh private-browser login using the dedicated administrator account and TOTP succeeded, confirming that two-factor authentication is enforced for the normal WebGUI administration path.
+
+The original privileged system account is retained only as a controlled recovery path rather than the routine WebGUI administrator.
+
 ## Next Step
 
-Create a dedicated administrator account, add TOTP-based two-factor authentication, test the new login path in a separate browser session, and only then decide whether to require the TOTP authentication backend for WebGUI access.
+Harden the recovery/console model, then configure and validate the local DNS resolver and DNSSEC before production cutover.
