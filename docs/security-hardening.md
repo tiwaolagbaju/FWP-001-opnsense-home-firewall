@@ -1,6 +1,6 @@
 # Security Hardening
 
-> **Security note:** This public document intentionally omits the actual firewall hostname, management address, administrator usernames, passwords, OTP secrets, certificates, internal addressing, and other operational details.
+> **Security note:** This public document intentionally omits the actual firewall hostname, management address, administrator usernames, passwords, OTP secrets, certificates, internal addressing, delegated IPv6 prefixes, global IPv6 addresses, and other operational details.
 
 ## Goal
 
@@ -74,9 +74,9 @@ A separate LAN rule was then added to block direct client DNS-over-TLS connectio
 
 ## Step 8 — IPv6 Lab Validation
 
-The test workstation received only a link-local IPv6 address (`fe80::/10`) and had no working end-to-end IPv6 connectivity in the current double-NAT lab. A direct IPv6 connectivity test to a public IPv6 endpoint returned no replies.
+The test workstation received only a link-local IPv6 address (`fe80::/10`) and had no working end-to-end IPv6 connectivity in the double-NAT lab. A direct IPv6 connectivity test to a public IPv6 endpoint returned no replies.
 
-Because no routed IPv6 client path is active in the lab, equivalent IPv6 DNS enforcement rules are deferred until the production WAN is connected and IPv6 behavior can be tested against the ISP handoff.
+Because no routed IPv6 client path was active in the lab, equivalent IPv6 DNS enforcement rules were deferred until the production WAN was connected and IPv6 behavior could be tested against the ISP handoff.
 
 ## Step 9 — Post-Hardening Recovery Point
 
@@ -84,6 +84,21 @@ After all lab hardening and DNS-enforcement checks passed, a fresh full OPNsense
 
 This creates a known-good recovery point immediately before the production WAN cutover.
 
+## Step 10 — Production IPv6 Validation
+
+After the direct ISP cutover, native IPv6 became available to LAN clients. A wireless client connected through the temporary downstream access point received globally routable IPv6 addressing and an IPv6 default route through OPNsense.
+
+Production validation included:
+
+- successful IPv6 ICMP reachability to a public IPv6 endpoint
+- a completed IPv6 traceroute to a public Internet destination
+- OPNsense appearing as the first IPv6 routing hop
+- successful AAAA-record resolution through the local DNS path
+
+Exact global IPv6 addresses and delegated prefix information are intentionally omitted from this public document.
+
+This confirms that IPv6 is now an active production path rather than merely a link-local client capability. Because IPv6 can bypass IPv4-only policy controls, the next hardening checkpoint is to verify equivalent DNS-enforcement behavior for IPv6 clients before considering the DNS policy complete.
+
 ## Next Step
 
-Prepare the production cutover: preserve rollback capability, release the existing ISP router DHCP lease if available, move the ONT Ethernet handoff to OPNsense, confirm that OPNsense receives a public WAN lease, restore normal public-WAN protections, and revalidate DNS, Internet access, performance, and IPv6 behavior.
+Verify IPv6 DNS policy enforcement so LAN clients can continue using the firewall's local resolver while direct external IPv6 DNS on TCP/UDP port 53 and direct client DNS-over-TLS on TCP port 853 are blocked. Re-test normal IPv6 web access and DNS resolution after each rule change, and preserve the working IPv6 routing path.
