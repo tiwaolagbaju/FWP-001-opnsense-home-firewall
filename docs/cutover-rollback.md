@@ -53,6 +53,10 @@ The original ISP router may be reused temporarily for wireless coverage after OP
 - Confirm wireless clients receive OPNsense-issued addresses, use OPNsense as their gateway/DNS path, and can reach the Internet.
 - Confirm the ISP router remains reachable at its reserved management address.
 
+**Access-point validation:** The former ISP router was successfully placed downstream of OPNsense with its WAN interface unused and DHCP disabled. A wireless client connected through the former router received an address from the OPNsense DHCP pool, used OPNsense as the IPv4 default gateway and DNS server, and showed OPNsense as the first IPv4 routing hop toward the Internet. This confirms that OPNsense remains the routing, DHCP, and DNS authority while the former router is functioning as a temporary wireless access point.
+
+**Troubleshooting note:** During validation, an unintended routing device was briefly introduced where the unmanaged switch was expected. The client consequently received addressing and a gateway from a different private subnet. The mismatch was identified using client-side DHCP/gateway inspection, the unintended device was removed, and the intended Layer-2 switch was restored. This provided a useful validation lesson: confirm the functional role of every intermediate network device and verify the actual DHCP source rather than assuming the physical topology is correct.
+
 ### Stage 4 — Validation
 
 Validate the following before considering the cutover successful:
