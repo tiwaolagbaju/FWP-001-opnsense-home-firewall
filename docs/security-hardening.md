@@ -122,6 +122,14 @@ This closes the IPv6 equivalent of the previously validated IPv4 DNS-bypass path
 
 > **Scope note:** These firewall rules do not by themselves prevent DNS-over-HTTPS over TCP/443. DoH control is a separate policy problem and is not claimed as complete in this project checkpoint.
 
+## Step 12 — Post-Cutover Recovery Point
+
+After the production WAN cutover, temporary access-point validation, native IPv6 validation, and IPv4/IPv6 DNS-enforcement checks were completed successfully, a fresh OPNsense configuration backup was exported and stored privately.
+
+The former ISP router configuration backup is also retained privately as part of the rollback plan. Neither backup is stored in the public repository because they may contain sensitive addressing, interface, certificate, firewall, or device information.
+
+This creates a current recovery point representing the known-good production state.
+
 ## Next Step
 
-Create a fresh post-cutover configuration backup and continue final production validation, including firewall exposure checks, temporary wireless stability, and documentation cleanup before considering the initial migration phase complete.
+Complete final production validation, including external exposure checks, temporary wireless stability, and documentation cleanup before considering the initial migration phase complete.
