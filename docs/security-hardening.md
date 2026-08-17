@@ -97,8 +97,31 @@ Production validation included:
 
 Exact global IPv6 addresses and delegated prefix information are intentionally omitted from this public document.
 
-This confirms that IPv6 is now an active production path rather than merely a link-local client capability. Because IPv6 can bypass IPv4-only policy controls, the next hardening checkpoint is to verify equivalent DNS-enforcement behavior for IPv6 clients before considering the DNS policy complete.
+This confirms that IPv6 is now an active production path rather than merely a link-local client capability.
+
+## Step 11 — IPv6 DNS Enforcement
+
+Equivalent IPv6 DNS-enforcement rules were added to the LAN ruleset above the broad IPv6 allow rule.
+
+The policy order is:
+
+1. Allow LAN clients to use the firewall's local DNS service over IPv6 on TCP/UDP port 53.
+2. Block direct external IPv6 DNS queries from LAN clients on TCP/UDP port 53.
+3. Block direct client IPv6 DNS-over-TLS connections on TCP port 853.
+4. Allow other intended IPv6 LAN traffic according to the general LAN policy.
+
+Validation confirmed that:
+
+- normal DNS resolution through OPNsense continued to work
+- direct DNS queries to an external IPv6 resolver failed as expected
+- direct IPv6 TCP/853 connectivity to an external resolver failed as expected
+- normal Internet browsing remained functional
+- native IPv6 routing remained functional after the enforcement rules were applied
+
+This closes the IPv6 equivalent of the previously validated IPv4 DNS-bypass path. The DNS policy now covers both active IP families for direct port 53 and DNS-over-TLS bypass attempts.
+
+> **Scope note:** These firewall rules do not by themselves prevent DNS-over-HTTPS over TCP/443. DoH control is a separate policy problem and is not claimed as complete in this project checkpoint.
 
 ## Next Step
 
-Verify IPv6 DNS policy enforcement so LAN clients can continue using the firewall's local resolver while direct external IPv6 DNS on TCP/UDP port 53 and direct client DNS-over-TLS on TCP port 853 are blocked. Re-test normal IPv6 web access and DNS resolution after each rule change, and preserve the working IPv6 routing path.
+Create a fresh post-cutover configuration backup and continue final production validation, including firewall exposure checks, temporary wireless stability, and documentation cleanup before considering the initial migration phase complete.
