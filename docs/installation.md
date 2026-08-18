@@ -27,12 +27,12 @@ Both onboard Ethernet interfaces were detected successfully by OPNsense:
 - `igc0` — Intel-based 2.5 GbE interface
 - `re0` — Realtek-based 1 GbE interface
 
-For the current 1 Gig Internet service, the initial assignment is:
+The validated production assignment is:
 
 - **LAN:** `igc0` — preserves the faster 2.5 GbE interface for the internal network and future managed switching
-- **WAN:** `re0` — matches the present 1 Gig WAN requirement
+- **WAN:** `re0` — matches the current 1 Gig WAN requirement
 
-No LAGG, VLAN, or optional physical interface was configured during the initial console setup. VLANs will be added later after the basic WAN/LAN lab configuration is validated.
+No LAGG or production VLAN interfaces were required for the initial migration phase. VLANs are planned for the later segmentation phase after the stable single-LAN deployment.
 
 ## Initial LAN Validation
 
@@ -40,7 +40,7 @@ A directly connected test workstation successfully received a DHCP lease from th
 
 ## Isolated WAN / Double-NAT Lab Validation
 
-The WAN interface was connected to a LAN port on the existing ISP router so OPNsense could be tested without interrupting the household Internet connection. Because the lab WAN receives a private RFC1918 address from the upstream router, private-network blocking on the WAN was disabled for the lab stage only.
+The WAN interface was connected to a LAN port on the existing ISP router so OPNsense could be tested without interrupting the household Internet connection. Because the lab WAN received a private RFC1918 address from the upstream router, private-network blocking on the WAN was disabled for the lab stage only.
 
 The WAN interface successfully received a private DHCP lease and default gateway from the upstream router. From the test workstation behind OPNsense, the following checks all passed:
 
@@ -48,13 +48,13 @@ The WAN interface successfully received a private DHCP lease and default gateway
 - DNS resolution of a public hostname
 - HTTPS web browsing to a public site
 
-This confirms basic WAN DHCP, routing/NAT, LAN DHCP, DNS forwarding/resolution, and firewall pass-through behavior before production cutover.
+This confirmed basic WAN DHCP, routing/NAT, LAN DHCP, DNS forwarding/resolution, and firewall pass-through behavior before production cutover.
 
 ## Known-Good Configuration Backup
 
 After the successful isolated lab validation, a full configuration backup was exported and stored privately. The backup file is intentionally excluded from the public repository because OPNsense configuration exports can contain sensitive network and firewall information.
 
-This backup provides a recovery point before firmware updates and later security configuration changes.
+This created a recovery point before firmware updates and later security configuration changes.
 
 ## Firmware Update Checkpoint
 
@@ -77,7 +77,7 @@ Compared with the pre-OPNsense baseline of approximately 936.75 Mbps download, 8
 - **Upload:** 0.47% lower
 - **Latency:** 2 ms higher
 
-Because this test traverses both the existing ISP router and OPNsense, it is intentionally treated as a lab validation rather than the final production benchmark. Even with the additional routing/NAT layer, throughput remained within 5% of the original wired baseline.
+Because this test traversed both the existing ISP router and OPNsense, it was treated as a lab validation rather than the final production benchmark. Even with the additional routing/NAT layer, throughput remained within 5% of the original wired baseline.
 
 ## Production WAN Performance Validation
 
@@ -104,7 +104,11 @@ The mini PC firmware was configured with **AC power loss control = Always on**. 
 
 A controlled power-restore test was completed successfully. After AC power was removed and restored, the mini PC powered itself back on without a manual power-button press and OPNsense booted normally.
 
-At this checkpoint:
+## Production Installation Status
+
+The installation phase is complete. The appliance has progressed from bench installation through lab validation and into production operation on the direct ISP handoff.
+
+Completed checkpoints:
 
 - [x] Bootable installer created
 - [x] Installation media verified
@@ -112,19 +116,21 @@ At this checkpoint:
 - [x] ZFS installation completed
 - [x] System rebooted from internal storage
 - [x] OPNsense console reached successfully
-- [x] Verify detected network interfaces
-- [x] Assign WAN and LAN roles
-- [x] Configure isolated lab network
-- [x] Confirm web-management access
-- [x] Export known-good lab configuration backup
-- [x] Update firmware/packages before production cutover
-- [x] Validate post-update connectivity
-- [x] Measure lab throughput and latency
-- [x] Configure automatic startup after AC power restoration
-- [x] Validate automatic power recovery behavior
-- [x] Validate direct public WAN connectivity
-- [x] Measure production throughput and latency
+- [x] Network interfaces detected and assigned
+- [x] Isolated lab network configured
+- [x] Web-management access confirmed
+- [x] Known-good lab configuration backup exported
+- [x] Firmware/packages updated before production cutover
+- [x] Post-update connectivity validated
+- [x] Lab throughput and latency measured
+- [x] Automatic startup after AC power restoration configured
+- [x] Automatic power recovery validated
+- [x] Direct public WAN connectivity validated
+- [x] Production throughput and latency measured
+- [x] Temporary downstream wireless access point validated
+- [x] Native IPv6 validated after production cutover
+- [x] Post-cutover configuration backup exported
 
-## Next Step
+## Final Installation Outcome
 
-The firewall has passed installation, lab validation, security hardening, direct WAN cutover, recovery, and production performance checkpoints. The next stage is to restore temporary wireless service by converting the former ISP router into a downstream access-point role while keeping OPNsense as the only router, DHCP authority, and DNS path.
+The dedicated mini PC is now operating as the production OPNsense edge firewall/router. The validated interface assignment, direct ISP handoff, power-recovery behavior, and measured throughput all met the project requirements. Security hardening, DNS enforcement, IPv6 validation, WAN exposure testing, and rollback details are documented separately in the other project files.
