@@ -4,7 +4,7 @@
 
 ## Goal
 
-Apply production-ready security settings incrementally, validating connectivity after each change so that any configuration issue can be isolated and rolled back quickly.
+Apply production-ready security settings incrementally, validating connectivity after each change so that configuration issues can be isolated and rolled back quickly.
 
 ## Step 1 — System Identity, Time, DNS Behavior, and Administration Defaults
 
@@ -82,7 +82,7 @@ Because no routed IPv6 client path was active in the lab, equivalent IPv6 DNS en
 
 After all lab hardening and DNS-enforcement checks passed, a fresh full OPNsense configuration backup was exported and stored privately. The backup is intentionally excluded from the public repository because configuration exports can contain sensitive operational data.
 
-This creates a known-good recovery point immediately before the production WAN cutover.
+This created a known-good recovery point immediately before the production WAN cutover.
 
 ## Step 10 — Production IPv6 Validation
 
@@ -147,6 +147,25 @@ This provides external validation that no tested TCP service was exposed on the 
 
 The exact public WAN address and raw scan screenshots are intentionally excluded from the repository.
 
-## Next Step
+## Step 14 — Final Production Sanity Check
 
-Complete the final production sanity check and documentation cleanup, then summarize the project outcomes, lessons learned, and future improvements before considering the initial migration phase complete.
+A final validation pass was completed from both wired and wireless clients after all major production changes.
+
+The final sanity check confirmed:
+
+- OPNsense-issued client addressing remained functional
+- OPNsense remained the expected IPv4 gateway and DNS path
+- IPv4 Internet access remained functional
+- native IPv6 Internet access remained functional
+- DNS resolution remained functional
+- OPNsense management remained reachable from the intended internal path
+- the temporary downstream access point remained reachable for management
+- wireless clients continued to use OPNsense for routing, DHCP, and DNS
+
+No additional corrective changes were required after this final verification.
+
+## Security Hardening Outcome
+
+The initial security-hardening phase is complete. The production firewall now includes hardened administration, MFA, DNSSEC, encrypted upstream DNS, blocklist automation, IPv4 and IPv6 DNS-bypass enforcement, validated native IPv6, no user-defined inbound WAN pass rules, no configured destination-NAT/port-forward entries, a successful external full-stealth scan for the tested TCP service-port range, and current private recovery backups.
+
+Future security work will focus on the later segmentation phase, management-plane isolation, centralized monitoring/logging, and evaluation of DNS-over-HTTPS control options.
