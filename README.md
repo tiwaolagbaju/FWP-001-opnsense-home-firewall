@@ -185,19 +185,24 @@ The initial migration phase is complete.
 
 OPNsense is now operating as the primary edge router/firewall on the direct ISP Ethernet handoff. Wired and wireless clients use OPNsense for routing, DHCP, DNS, and firewall policy. IPv4 and native IPv6 are operational, production throughput remains at approximately Gigabit service levels, DNS-bypass controls have been validated for both IP families, external WAN exposure testing passed for the tested TCP service-port range, and current recovery backups are available privately.
 
-## Future Improvements
+## Future Updates
 
-The current network is intentionally running as a stable single trusted LAN before additional segmentation is introduced. Planned improvements include:
+FWP-001 is complete as an initial production deployment, but the home network will continue to evolve. Future changes will be documented here as they are implemented and validated rather than presented as completed work in advance.
 
-- Replace the unmanaged switch with a managed VLAN-capable core switch
-- Create separate Trusted, IoT, Guest, and Server/NAS VLANs
-- Add VLAN-aware wired access points
-- Build inter-VLAN least-privilege firewall policies
-- Restrict firewall administration to a dedicated management path
-- Evaluate DNS-over-HTTPS control options
-- Add centralized monitoring/logging and alerting
-- Add UPS-backed power for the firewall, switch, and networking stack
-- Continue documenting security tests and operational changes
+### Planned Roadmap
+
+- [ ] Replace the unmanaged switch with a managed VLAN-capable core switch
+- [ ] Create separate Trusted, IoT, Guest, and Server/NAS VLANs
+- [ ] Add VLAN-aware wireless access points
+- [ ] Build least-privilege inter-VLAN firewall policies
+- [ ] Restrict firewall administration to a dedicated management path
+- [ ] Add centralized logging, monitoring, and alerting
+- [ ] Add UPS-backed power for the firewall, switch, and networking stack
+- [ ] Evaluate DNS-over-HTTPS control options
+- [ ] Perform additional IPv6-focused external exposure validation
+- [ ] Continue documenting performance, security tests, configuration changes, and troubleshooting lessons
+
+As each item is completed, the related documentation and architecture diagrams will be updated and the roadmap item will be marked complete.
 
 ## References and Resources
 
