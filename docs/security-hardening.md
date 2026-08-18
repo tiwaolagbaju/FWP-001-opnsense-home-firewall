@@ -1,6 +1,6 @@
 # Security Hardening
 
-> **Security note:** This public document intentionally omits the actual firewall hostname, management address, administrator usernames, passwords, OTP secrets, certificates, internal addressing, delegated IPv6 prefixes, global IPv6 addresses, and other operational details.
+> **Security note:** This public document intentionally omits the actual firewall hostname, management address, administrator usernames, passwords, OTP secrets, certificates, internal addressing, delegated IPv6 prefixes, global IPv6 addresses, public WAN addresses, and other operational details.
 
 ## Goal
 
@@ -130,6 +130,23 @@ The former ISP router configuration backup is also retained privately as part of
 
 This creates a current recovery point representing the known-good production state.
 
+## Step 13 — External WAN Exposure Validation
+
+The production WAN ruleset was reviewed before external testing. No user-defined WAN pass rules were present, and the Destination NAT / port-forward table contained no entries.
+
+An initial external scan produced inconsistent results, which was traced to a client VPN being active during the test. Because the VPN changed the public endpoint being scanned, those results were discarded and are not treated as evidence about the OPNsense WAN.
+
+The scan was then repeated with the client VPN disabled and the test endpoint verified against the OPNsense public WAN path. The external service-port scan passed its full-stealth test across the first 1,056 TCP service ports:
+
+- **0 open ports**
+- **0 closed/responding ports**
+- **1,056 stealth ports**
+- no unsolicited response detected by the scan
+
+This provides external validation that no tested TCP service was exposed on the public IPv4 WAN and that unsolicited probes were silently dropped during the test window.
+
+The exact public WAN address and raw scan screenshots are intentionally excluded from the repository.
+
 ## Next Step
 
-Complete final production validation, including external exposure checks, temporary wireless stability, and documentation cleanup before considering the initial migration phase complete.
+Complete the final production sanity check and documentation cleanup, then summarize the project outcomes, lessons learned, and future improvements before considering the initial migration phase complete.
