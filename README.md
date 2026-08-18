@@ -192,6 +192,20 @@ The current network is intentionally running as a stable single trusted LAN befo
 - Add UPS-backed power for the firewall, switch, and networking stack
 - Continue documenting security tests and operational changes
 
+## References and Resources
+
+The following resources were used during the design, configuration, validation, or troubleshooting of this project:
+
+- [OPNsense Documentation](https://docs.opnsense.org/) — installation, interfaces, firewall configuration, Unbound DNS, diagnostics, and packet capture
+- [Verizon Fios — Using Your Own Router](https://community.verizon.com/kb/articles/1696146-using-your-own-router-with-verizon-fios) — ISP-router DHCP lease release and direct ONT handoff guidance
+- [GRC ShieldsUP](https://www.grc.com/shieldsup) — external IPv4 WAN exposure testing
+- [OISD](https://oisd.nl/) — DNS blocklist source used with Unbound
+- [Cloudflare 1.1.1.1 Documentation](https://developers.cloudflare.com/1.1.1.1/) — upstream DNS and encrypted DNS service documentation
+
+### Inspiration
+
+The initial idea for replacing the ISP-provided router with OPNsense was inspired by a NetworkChuck walkthrough. The final implementation was expanded beyond the original walkthrough to include production IPv6 validation, DNSSEC, DNS-over-TLS, DNS-bypass enforcement for IPv4 and IPv6, TOTP MFA, performance benchmarking, rollback planning, automatic power recovery, external WAN exposure testing, and production troubleshooting.
+
 ---
 
 **FWP-001** is part of my Fun Weekend Projects series: practical IT, networking, infrastructure, automation, and cybersecurity projects built to strengthen hands-on skills and document the engineering process from design through validation.
