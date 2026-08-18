@@ -1,8 +1,26 @@
 # FWP-001 — OPNsense Home Firewall
 
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
+![Platform](https://img.shields.io/badge/platform-OPNsense-orange)
+![Networking](https://img.shields.io/badge/network-IPv4%20%2B%20IPv6-blue)
+
 Replacing an ISP-provided router with a dedicated OPNsense firewall/router while documenting the design, migration, security hardening, testing, rollback strategy, and troubleshooting process.
 
+[← Back to Fun Weekend Projects](https://github.com/tiwaolagbaju/fun-weekend-projects)
+
 > **Portfolio note:** Public documentation is intentionally sanitized. Exact public/internal addresses, hostnames, SSIDs, MAC addresses, credentials, configuration backups, and other operational details are not included.
+
+## At a Glance
+
+| Item | Result |
+|---|---|
+| **Goal** | Replace the ISP router with a dedicated OPNsense edge firewall/router |
+| **Status** | ✅ Initial migration phase complete |
+| **Connectivity** | IPv4 and native IPv6 validated |
+| **Production performance** | ~937.64 Mbps down / ~919.77 Mbps up / 7 ms average latency |
+| **DNS security** | DNSSEC, encrypted upstream DNS-over-TLS, filtering, and direct DNS-bypass controls |
+| **WAN validation** | 0 open TCP ports in the tested 1,056-port IPv4 service range |
+| **Recovery** | OPNsense and ISP-router recovery configurations retained privately |
 
 ## Project Summary
 
@@ -12,25 +30,14 @@ The implementation was built and validated in stages: baseline documentation, is
 
 ## Final Architecture
 
-```text
-Internet / ISP ONT
-        |
-        v
-+---------------------+
-|  OPNsense Firewall  |
-|  WAN: 1 GbE         |
-|  LAN: 2.5 GbE       |
-+---------------------+
-        |
-        v
-+---------------------+
-|  LAN Switch         |
-+---------------------+
-   |              |
-   |              +---- Temporary Wi-Fi AP
-   |                    (former ISP router)
-   |
-   +---- Trusted wired clients
+```mermaid
+flowchart TD
+    A[Internet / ISP] --> B[ISP ONT]
+    B --> C[OPNsense Firewall / Router]
+    C -->|1 GbE WAN / 2.5 GbE LAN| D[Unmanaged Gigabit Switch]
+    D --> E[Trusted Wired Clients]
+    D --> F[Temporary Wi-Fi AP]
+    F --> G[Wireless Clients]
 ```
 
 The former ISP router is no longer performing routing, NAT, DHCP, or DNS functions. It is temporarily reused only for wireless access while OPNsense remains the network gateway and policy-enforcement point.
@@ -208,4 +215,4 @@ The initial idea for replacing the ISP-provided router with OPNsense was inspire
 
 ---
 
-**FWP-001** is part of my Fun Weekend Projects series: practical IT, networking, infrastructure, automation, and cybersecurity projects built to strengthen hands-on skills and document the engineering process from design through validation.
+**FWP-001** is part of my [Fun Weekend Projects](https://github.com/tiwaolagbaju/fun-weekend-projects) series: practical IT, networking, infrastructure, automation, and cybersecurity projects built to strengthen hands-on skills and document the engineering process from design through validation.
