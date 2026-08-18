@@ -166,7 +166,7 @@ These issues reinforced the importance of validating assumptions at each network
 
 Detailed implementation notes are maintained in the `docs/` directory:
 
-- [`docs/current-network.md`](docs/current-network.md) — original environment and performance baseline
+- [`docs/pre-migration-network.md`](docs/pre-migration-network.md) — original environment and performance baseline
 - [`docs/target-architecture.md`](docs/target-architecture.md) — target design and future segmentation plan
 - [`docs/installation.md`](docs/installation.md) — OPNsense installation, NIC assignment, lab testing, performance, and power recovery
 - [`docs/security-hardening.md`](docs/security-hardening.md) — MFA, DNSSEC, DoT, DNS filtering/enforcement, IPv6, backups, and WAN exposure validation
