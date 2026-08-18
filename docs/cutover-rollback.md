@@ -59,17 +59,24 @@ The original ISP router may be reused temporarily for wireless coverage after OP
 
 ### Stage 4 — Validation
 
-Validate the following before considering the cutover successful:
+Final production validation was completed successfully from both wired and wireless clients.
 
-- WAN connectivity is stable.
-- A trusted wired client receives an address through DHCP.
-- DNS resolution works.
-- Internet browsing works.
-- Wired throughput is reasonably close to the pre-change baseline.
-- Latency has not increased materially.
-- Temporary Wi-Fi clients receive addressing from OPNsense rather than the former router.
-- OPNsense management is reachable only from intended internal/admin devices.
-- No management services are exposed intentionally to the WAN.
+Validated results:
+
+- WAN connectivity remained stable on the direct ISP handoff.
+- Wired and wireless trusted clients received addressing through OPNsense DHCP.
+- OPNsense remained the IPv4 default gateway and DNS path.
+- IPv4 Internet connectivity and DNS resolution worked normally.
+- Native IPv6 connectivity and AAAA resolution worked normally.
+- OPNsense remained the first routing hop for client Internet traffic.
+- The temporary wireless access point remained reachable at its reserved management address.
+- OPNsense management remained reachable from the intended internal/admin path.
+- Production wired throughput remained effectively equivalent to the pre-change baseline.
+- No user-defined WAN pass rules or Destination NAT/port-forward entries were present.
+- An external service-port scan against the actual OPNsense public WAN passed full-stealth validation for the tested TCP service-port range.
+- Fresh post-cutover configuration backups were exported and stored privately.
+
+The final wired and wireless sanity checks passed without requiring additional corrective changes.
 
 ### Stage 5 — Rollback Trigger
 
@@ -103,4 +110,4 @@ Rollback will be initiated if a blocking issue cannot be resolved within the pla
 
 ## Success Criteria
 
-The migration is considered successful when OPNsense can provide stable routing, DHCP/DNS services, firewall enforcement, wired Internet performance reasonably close to the documented pre-change baseline, and temporary Wi-Fi through a downstream access point, with a repeatable recovery path available if needed.
+The initial migration phase is considered successful. OPNsense is operating as the primary edge router/firewall on the direct ISP handoff, DHCP and DNS services are functioning for wired and wireless clients, IPv4 and IPv6 connectivity are working, DNS-bypass controls have been validated, production performance remains at baseline levels, external WAN exposure checks passed for the tested service ports, and a repeatable rollback/recovery path remains available.
